@@ -6,9 +6,9 @@ function navbar() {
         <div>
             <nav className="navbar navbar-light bg-light">
                 <div className="container">
-                The quick brown fox jumps over the lazy dog.
+                    The quick brown fox jumps over the lazy dog.
                     <a className="navbar-brand" href="#">
-                        
+
                     </a>
                 </div>
             </nav>
