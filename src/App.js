@@ -31,6 +31,7 @@ function App() {
 
           {/* <Category body="Test"/> */}
           {allQuotesCategories.map(createCategoryButtons)}
+          <hr/>
           
           <Quotecomp />
 
