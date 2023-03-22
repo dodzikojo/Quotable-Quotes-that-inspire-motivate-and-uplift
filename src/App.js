@@ -85,7 +85,7 @@ let todayQuote = retrieveTodayQuote();
     id: 0,
     body: todayQuote.body,
     author: todayQuote.by,
-    currentQuoteCounter: 1,
+    currentQuoteCounter: 0,
     allRetrievedQuotes : allQuotes,
     totalQuotes: allQuotes.length,
 
@@ -97,10 +97,12 @@ let todayQuote = retrieveTodayQuote();
 
   function previousQuote() {
     setQuoteState({currentQuoteCounter: quoteState.currentQuoteCounter-1})
+    setQuoteState({...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter-1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter-1].by})
   }
 
   function nextQuote() {
     setQuoteState({currentQuoteCounter: quoteState.currentQuoteCounter+1})
+    setQuoteState({...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter+1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter+1].by})
   }
 
   function createCategoryButtons(category) {
@@ -119,10 +121,13 @@ let todayQuote = retrieveTodayQuote();
     allQuotes = quotes.getQuotesByCategory(categoryName);
     
     setQuoteState({...quoteState, allRetrievedQuotes: allQuotes, totalQuotes: allQuotes.length})
+    setQuoteState({allRetrievedQuotes: allQuotes})
     setQuoteState({...quoteState, body: allQuotes[0].body, author: allQuotes[0].by})
+    quoteState.allRetrievedQuotes = allQuotes
+    console.log(quoteState.allRetrievedQuotes)
+    // console.log("This is all retrieve: "+ quoteState.allRetrievedQuotes.length)
   }
   
-
 
   return (
     <div className="App">
@@ -136,11 +141,11 @@ let todayQuote = retrieveTodayQuote();
 
           <Quotecomp body={quoteState.body} author={quoteState.author} />
 
-          <div className="mt-4 flex justify-center">
+          {/* <div className="mt-4 flex justify-center">
             <button onClick={previousQuote} ><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
             <div className='px-2'>{quoteState.currentQuoteCounter} of {quoteState.totalQuotes}</div>
             <button onClick={nextQuote} className='' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
-          </div>
+          </div> */}
         </div>
       </div>
 
