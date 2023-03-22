@@ -42,8 +42,12 @@ function App() {
 
 function createCategoryButtons(category){
   return (
-    <Category data-category={category} body={category}/>
+    <Category onClick={getButtonCategory} data-category={category} body={category}/>
   )
+}
+
+function getButtonCategory(e){
+  console.log(e.currentTarget.getAttribute("data-category"))
 }
 
 
