@@ -41,12 +41,6 @@ function App() {
   );
 }
 
-// function iterate(arrayItem) {
-//   for (let index = 0; index < arrayItem.length; index++) {
-//     const element = arrayItem[index];
-//     console.log(element)
-//   }
-// }
 
 function retrieveQuoteByCategory(categoryName){
   allQuotes = quotes.getQuotesByCategory(categoryName);
