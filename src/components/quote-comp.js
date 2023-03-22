@@ -6,11 +6,11 @@ console.log(quotes.getAllQuotes());
 function Quotecomp(props) {
     return (
         <div>
-            <div className="mt-5 text-4xl">
+            <div className="mt-3 text-4xl">
                 {props.body}
             </div>
 
-            <div className="mt-5 text-xl">
+            <div className="mt-4 text-xl">
                 {props.author}
             </div>
         </div>

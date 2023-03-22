@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { faClipboard } from '@fortawesome/free-solid-svg-icons'
+import { TwitterShareButton, TwitterIcon } from 'react-share';
 
 import quotes from 'success-motivational-quotes'
 
@@ -146,9 +147,18 @@ function App() {
             <div className='px-2'>{quoteState.currentQuoteCounter} of {quoteState.totalQuotes}</div>
             <button onClick={nextQuote} className='' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
           </div> */}
-        
+
           <div class="flow-root">
+          <TwitterShareButton
+              url={"https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift/"}
+              title={quoteState.body + " -"+quoteState.author}
+              className="float-right Demo__some-network__share-button ml-2"
+            >
+              <TwitterIcon size={27} round />
+            </TwitterShareButton> 
+
             <button className="float-right text-xl" onClick={() => { navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author) }} ><FontAwesomeIcon icon={faClipboard} /></button>
+          
           </div>
         </div>
       </div>
