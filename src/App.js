@@ -16,15 +16,13 @@ import React, { Component, useState } from 'react';
 // import useState from "react"
 
 
-let allQuotes = quotes.getAllQuotes();
-const allQuotesCategories = quotes.getAllCategories();
-let todayQuote = retrieveTodayQuote();
 
-let displayedQuote = {
-  id: 0,
-  body: todayQuote.body,
-  author: todayQuote.by,
-}
+
+// let displayedQuote = {
+//   id: 0,
+//   body: todayQuote.body,
+//   author: todayQuote.by,
+// }
 // console.log(allQuotesCategories);
 
 // class App extends Component {
@@ -78,13 +76,52 @@ let displayedQuote = {
 
 function App() {
 
+
+  let allQuotes = quotes.getAllQuotes();
+const allQuotesCategories = quotes.getAllCategories();
+let todayQuote = retrieveTodayQuote();
+
   const [quoteState, setQuoteState] = useState({
     id: 0,
     body: todayQuote.body,
     author: todayQuote.by,
-    currentQuote: 1,
+    currentQuoteCounter: 1,
+    allRetrievedQuotes : allQuotes,
     totalQuotes: allQuotes.length,
+
   });
+
+  function retrieveTodayQuote() {
+    return quotes.getTodaysQuote();
+  }
+
+  function previousQuote() {
+    setQuoteState({currentQuoteCounter: quoteState.currentQuoteCounter-1})
+  }
+
+  function nextQuote() {
+    setQuoteState({currentQuoteCounter: quoteState.currentQuoteCounter+1})
+  }
+
+  function createCategoryButtons(category) {
+    return (
+      <Category onClick={getButtonCategory} data-category={category} body={category} />
+    )
+  }
+  
+  function getButtonCategory(e) {
+    let categoryName = e.currentTarget.getAttribute("data-category")
+    retrieveQuoteByCategory(categoryName)
+  }
+  
+  
+  function retrieveQuoteByCategory(categoryName) {
+    allQuotes = quotes.getQuotesByCategory(categoryName);
+    
+    setQuoteState({...quoteState, allRetrievedQuotes: allQuotes, totalQuotes: allQuotes.length})
+    setQuoteState({...quoteState, body: allQuotes[0].body, author: allQuotes[0].by})
+  }
+  
 
 
   return (
@@ -100,9 +137,9 @@ function App() {
           <Quotecomp body={quoteState.body} author={quoteState.author} />
 
           <div className="mt-4 flex justify-center">
-            <button onClick={() => setQuoteState({ ...quoteState, currentQuote: quoteState.currentQuote-1})} ><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
-            <div className='px-2'>{quoteState.currentQuote} of {quoteState.totalQuotes}</div>
-            <button onClick={() => setQuoteState({ ...quoteState, currentQuote: quoteState.currentQuote+1})} className='' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
+            <button onClick={previousQuote} ><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
+            <div className='px-2'>{quoteState.currentQuoteCounter} of {quoteState.totalQuotes}</div>
+            <button onClick={nextQuote} className='' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
           </div>
         </div>
       </div>
@@ -111,54 +148,26 @@ function App() {
   )
 }
 
+// function test(){
+//   console.log("test")
+
+// }
+
 // function getQuotesCount() {
 //   this.setState({
 //     totalQuotes: allQuotes.length
 //   })
 // }
 
-// function previousQuote() {
-//   this.setState({
-//     body: 'Previous Sample Body',
-//     author: "Previous Sample Author",
-//     totalQuotes: "3"
-
-//   })
-// }
-
-// function nextQuote() {
-//   this.setState({
-//     body: 'Next Sample Body',
-//     author: "Next Sample Author",
-//     totalQuotes: "4"
-//   })
-// }
 
 
-function createCategoryButtons(category) {
-  return (
-    <Category onClick={getButtonCategory} data-category={category} body={category} />
-  )
-}
 
-function getButtonCategory(e) {
-  let categoryName = e.currentTarget.getAttribute("data-category")
-  retrieveQuoteByCategory(categoryName)
-}
-
-
-function retrieveQuoteByCategory(categoryName) {
-  allQuotes = quotes.getQuotesByCategory(categoryName);
-  // console.log(quotes.getQuotesByCategory(categoryName))
-}
 
 // function retrieveQuoteByAuthor(authorName) {
 //   allQuotes = quotes.getQuotesByAuthor(authorName);
 // }
 
-function retrieveTodayQuote() {
-  return quotes.getTodaysQuote();
-}
+
 
 
 
