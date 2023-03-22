@@ -42,7 +42,7 @@ function App() {
 
 function createCategoryButtons(category){
   return (
-    <Category body={category}/>
+    <Category data-category={category} body={category}/>
   )
 }
 
