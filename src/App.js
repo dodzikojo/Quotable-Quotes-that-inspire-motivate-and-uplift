@@ -121,10 +121,9 @@ let todayQuote = retrieveTodayQuote();
     allQuotes = quotes.getQuotesByCategory(categoryName);
     
     setQuoteState({...quoteState, allRetrievedQuotes: allQuotes, totalQuotes: allQuotes.length})
-    setQuoteState({allRetrievedQuotes: allQuotes})
-    setQuoteState({...quoteState, body: allQuotes[0].body, author: allQuotes[0].by})
+    let randomQuote = allQuotes[Math.floor(Math.random()*allQuotes.length)]
+    setQuoteState({...quoteState, body: randomQuote.body, author: randomQuote.by})
     quoteState.allRetrievedQuotes = allQuotes
-    console.log(quoteState.allRetrievedQuotes)
     // console.log("This is all retrieve: "+ quoteState.allRetrievedQuotes.length)
   }
   
