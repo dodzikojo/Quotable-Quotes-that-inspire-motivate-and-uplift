@@ -83,7 +83,7 @@ function App() {
     body: todayQuote.body,
     author: todayQuote.by,
     currentQuote: 1,
-    totalQuotes: 6,
+    totalQuotes: allQuotes.length,
   });
 
 
@@ -111,28 +111,28 @@ function App() {
   )
 }
 
-function getQuotesCount() {
-  this.setState({
-    totalQuotes: allQuotes.length
-  })
-}
+// function getQuotesCount() {
+//   this.setState({
+//     totalQuotes: allQuotes.length
+//   })
+// }
 
-function previousQuote() {
-  this.setState({
-    body: 'Previous Sample Body',
-    author: "Previous Sample Author",
-    totalQuotes: "3"
+// function previousQuote() {
+//   this.setState({
+//     body: 'Previous Sample Body',
+//     author: "Previous Sample Author",
+//     totalQuotes: "3"
 
-  })
-}
+//   })
+// }
 
-function nextQuote() {
-  this.setState({
-    body: 'Next Sample Body',
-    author: "Next Sample Author",
-    totalQuotes: "4"
-  })
-}
+// function nextQuote() {
+//   this.setState({
+//     body: 'Next Sample Body',
+//     author: "Next Sample Author",
+//     totalQuotes: "4"
+//   })
+// }
 
 
 function createCategoryButtons(category) {
