@@ -79,15 +79,15 @@ function App() {
 
 
   let allQuotes = quotes.getAllQuotes();
-const allQuotesCategories = quotes.getAllCategories();
-let todayQuote = retrieveTodayQuote();
+  const allQuotesCategories = quotes.getAllCategories();
+  let todayQuote = retrieveTodayQuote();
 
   const [quoteState, setQuoteState] = useState({
     id: 0,
     body: todayQuote.body,
     author: todayQuote.by,
     currentQuoteCounter: 0,
-    allRetrievedQuotes : allQuotes,
+    allRetrievedQuotes: allQuotes,
     totalQuotes: allQuotes.length,
 
   });
@@ -97,13 +97,13 @@ let todayQuote = retrieveTodayQuote();
   }
 
   function previousQuote() {
-    setQuoteState({currentQuoteCounter: quoteState.currentQuoteCounter-1})
-    setQuoteState({...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter-1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter-1].by})
+    setQuoteState({ currentQuoteCounter: quoteState.currentQuoteCounter - 1 })
+    setQuoteState({ ...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter - 1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter - 1].by })
   }
 
   function nextQuote() {
-    setQuoteState({currentQuoteCounter: quoteState.currentQuoteCounter+1})
-    setQuoteState({...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter+1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter+1].by})
+    setQuoteState({ currentQuoteCounter: quoteState.currentQuoteCounter + 1 })
+    setQuoteState({ ...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter + 1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter + 1].by })
   }
 
   function createCategoryButtons(category) {
@@ -111,23 +111,23 @@ let todayQuote = retrieveTodayQuote();
       <Category onClick={getButtonCategory} data-category={category} body={category} />
     )
   }
-  
+
   function getButtonCategory(e) {
     let categoryName = e.currentTarget.getAttribute("data-category")
     retrieveQuoteByCategory(categoryName)
   }
-  
-  
+
+
   function retrieveQuoteByCategory(categoryName) {
     allQuotes = quotes.getQuotesByCategory(categoryName);
-    
-    setQuoteState({...quoteState, allRetrievedQuotes: allQuotes, totalQuotes: allQuotes.length})
-    let randomQuote = allQuotes[Math.floor(Math.random()*allQuotes.length)]
-    setQuoteState({...quoteState, body: randomQuote.body, author: randomQuote.by})
+
+    setQuoteState({ ...quoteState, allRetrievedQuotes: allQuotes, totalQuotes: allQuotes.length })
+    let randomQuote = allQuotes[Math.floor(Math.random() * allQuotes.length)]
+    setQuoteState({ ...quoteState, body: randomQuote.body, author: randomQuote.by })
     quoteState.allRetrievedQuotes = allQuotes
     // console.log("This is all retrieve: "+ quoteState.allRetrievedQuotes.length)
   }
-  
+
 
   return (
     <div className="App">
@@ -146,7 +146,10 @@ let todayQuote = retrieveTodayQuote();
             <div className='px-2'>{quoteState.currentQuoteCounter} of {quoteState.totalQuotes}</div>
             <button onClick={nextQuote} className='' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
           </div> */}
-          <button onClick={() => {navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author)}} className='' ><FontAwesomeIcon icon={faClipboard} /></button>
+        
+          <div class="flow-root">
+            <button className="float-right text-xl" onClick={() => { navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author) }} ><FontAwesomeIcon icon={faClipboard} /></button>
+          </div>
         </div>
       </div>
 
