@@ -1,4 +1,5 @@
-import logo from './logo.svg';
+import logo from './logo.png';
+// import appLogo from './public/assets/logo.png';
 import nav from './components/navbar';
 import './App.css';
 import 'holderjs';
@@ -9,23 +10,32 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import quote from './components/quote';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
   return (
     <div className="App">
-    <quote/>
-      {/* <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
-        <Card.Body>
-          <Card.Title>A product name</Card.Title>
-          <Card.Text>
-            Some main content text can go here, a product description for example
-          </Card.Text>
-          <Button variant="primary">View</Button>
-        </Card.Body>
-      </Card> */}
-      
+      <div className="flex justify-center flex-col m-auto h-screen">
+        <div className="bg-white w-1/2 mx-auto  p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+          <div>
+            <img src={logo} className="App-logo mx-auto" alt="logo" />
+          </div>
+          <div className="mt-5 text-4xl">
+            Life is like riding a bicycle. To keep your balance you must keep moving.
+          </div>
+
+          <div className="mt-5 text-xl">
+            Albert Einstein
+          </div>
+
+          <div className="mt-5 flex justify-center">
+            <button><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
+            <button className='ml-2' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
+          </div>
+        </div>
+      </div>
 
     </div>
   );
