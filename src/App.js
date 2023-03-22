@@ -25,7 +25,9 @@ function App() {
             <img src={logo} className="App-logo mx-auto" alt="logo" />
           </div>
 
-          <Category/>
+          
+
+          <Category category="Test"/>
           <Quotecomp />
 
           <div className="mt-5 flex justify-center">
@@ -37,6 +39,12 @@ function App() {
 
     </div>
   );
+}
+
+function createCategoryButtons(category){
+  return (
+    <Category />
+  )
 }
 
 
