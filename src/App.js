@@ -14,6 +14,8 @@ import quotes from 'success-motivational-quotes'
 
 
 const allQuotes = quotes.getAllQuotes();
+const allQuotesCategories = quotes.getAllCategories();
+
 let quote;
 
 function App() {
@@ -27,7 +29,9 @@ function App() {
 
           
 
-          <Category category="Test"/>
+          {/* <Category body="Test"/> */}
+          {allQuotesCategories.map(createCategoryButtons)}
+          
           <Quotecomp />
 
           <div className="mt-5 flex justify-center">
@@ -43,7 +47,7 @@ function App() {
 
 function createCategoryButtons(category){
   return (
-    <Category />
+    <Category body={category}/>
   )
 }
 
