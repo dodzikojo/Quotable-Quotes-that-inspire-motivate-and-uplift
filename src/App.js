@@ -16,24 +16,18 @@ import quotes from 'success-motivational-quotes'
 const allQuotes = quotes.getAllQuotes();
 const allQuotesCategories = quotes.getAllCategories();
 
-let quote;
-
 function App() {
   return (
     <div className="App">
       <div className="flex justify-center flex-col m-auto h-screen">
         <div className="bg-white w-1/2 mx-auto  p-8 md:p-12 my-10 rounded-lg shadow-2xl">
           <div>
-            <img src={logo} className="App-logo mx-auto" alt="logo" />
+            <img src={logo} className="App-logo mx-auto mb-2" alt="logo" />
           </div>
-
-          
-
-          {/* <Category body="Test"/> */}
           {allQuotesCategories.map(createCategoryButtons)}
           <hr/>
           
-          <Quotecomp />
+          <Quotecomp body={retrieveTodayQuote().body} author={retrieveTodayQuote().author} />
 
           <div className="mt-5 flex justify-center">
             <button><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
@@ -61,7 +55,7 @@ function retrieveQuoteByAuthor(authorName) {
   allQuotes = quotes.getQuotesByAuthor(authorName);
 }
 
-function retrieveTodayQuote(authorName) {
+function retrieveTodayQuote() {
   return quotes.getTodaysQuote();
 }
 
