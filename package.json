@@ -2,7 +2,7 @@
   "name": "quotable",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift",
+  "homepage": "https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -17,12 +17,13 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "react-share": "^4.4.1",
     "success-motivational-quotes": "^1.0.8",
     "tailwind-fontawesome": "^0.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "npm run build", 
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
