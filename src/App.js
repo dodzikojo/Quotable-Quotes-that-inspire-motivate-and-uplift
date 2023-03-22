@@ -32,15 +32,15 @@ function App() {
     return quotes.getTodaysQuote();
   }
 
-  function previousQuote() {
-    setQuoteState({ currentQuoteCounter: quoteState.currentQuoteCounter - 1 })
-    setQuoteState({ ...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter - 1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter - 1].by })
-  }
+  // function previousQuote() {
+  //   setQuoteState({ currentQuoteCounter: quoteState.currentQuoteCounter - 1 })
+  //   setQuoteState({ ...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter - 1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter - 1].by })
+  // }
 
-  function nextQuote() {
-    setQuoteState({ currentQuoteCounter: quoteState.currentQuoteCounter + 1 })
-    setQuoteState({ ...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter + 1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter + 1].by })
-  }
+  // function nextQuote() {
+  //   setQuoteState({ currentQuoteCounter: quoteState.currentQuoteCounter + 1 })
+  //   setQuoteState({ ...quoteState, body: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter + 1].body, author: quoteState.allRetrievedQuotes[quoteState.currentQuoteCounter + 1].by })
+  // }
 
   function createCategoryButtons(category) {
     return (
@@ -61,7 +61,6 @@ function App() {
     let randomQuote = allQuotes[Math.floor(Math.random() * allQuotes.length)]
     setQuoteState({ ...quoteState, body: randomQuote.body, author: randomQuote.by })
     quoteState.allRetrievedQuotes = allQuotes
-    // console.log("This is all retrieve: "+ quoteState.allRetrievedQuotes.length)
   }
 
 
@@ -77,17 +76,17 @@ function App() {
 
           <Quotecomp body={quoteState.body} author={quoteState.author} />
 
-          <div class="flow-root">
-          <TwitterShareButton
+          <div className="flow-root">
+            <TwitterShareButton
               url={"https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift/"}
-              title={quoteState.body + " -"+quoteState.author}
+              title={quoteState.body + " -" + quoteState.author}
               className="float-right Demo__some-network__share-button ml-2"
             >
               <TwitterIcon size={27} round />
-            </TwitterShareButton> 
+            </TwitterShareButton>
 
             <button className="float-right text-xl" onClick={() => { navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author) }} ><FontAwesomeIcon icon={faClipboard} /></button>
-          
+
           </div>
         </div>
       </div>
