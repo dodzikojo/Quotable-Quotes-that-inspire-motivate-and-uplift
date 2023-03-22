@@ -30,8 +30,8 @@ function App() {
           <Quotecomp body={retrieveTodayQuote().body} author={retrieveTodayQuote().author} />
 
           <div className="mt-5 flex justify-center">
-            <button><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
-            <button className='ml-2' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
+            <button onClick={previousQuote} ><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
+            <button onClick={nextQuote} className='ml-2' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
           </div>
         </div>
       </div>
@@ -59,6 +59,13 @@ function retrieveTodayQuote() {
   return quotes.getTodaysQuote();
 }
 
+function nextQuote(){
+  console.log("Next quote")
+}
+
+function previousQuote(){
+  console.log("Previous Quote")
+}
 
 
 export default App;
