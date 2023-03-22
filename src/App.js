@@ -9,6 +9,7 @@ import Category from './components/category'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faClipboard } from '@fortawesome/free-solid-svg-icons'
 
 import quotes from 'success-motivational-quotes'
 
@@ -145,6 +146,7 @@ let todayQuote = retrieveTodayQuote();
             <div className='px-2'>{quoteState.currentQuoteCounter} of {quoteState.totalQuotes}</div>
             <button onClick={nextQuote} className='' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
           </div> */}
+          <button onClick={() => {navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author)}} className='' ><FontAwesomeIcon icon={faClipboard} /></button>
         </div>
       </div>
 
