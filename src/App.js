@@ -15,6 +15,7 @@ import quotes from 'success-motivational-quotes'
 
 const allQuotes = quotes.getAllQuotes();
 const allQuotesCategories = quotes.getAllCategories();
+console.log(allQuotesCategories)
 
 function App() {
   return (
@@ -25,8 +26,8 @@ function App() {
             <img src={logo} className="App-logo mx-auto mb-2" alt="logo" />
           </div>
           {allQuotesCategories.map(createCategoryButtons)}
-          <hr/>
-          
+          <hr />
+
           <Quotecomp body={retrieveTodayQuote().body} author={retrieveTodayQuote().author} />
 
           <div className="mt-5 flex justify-center">
@@ -40,19 +41,21 @@ function App() {
   );
 }
 
-function createCategoryButtons(category){
+function createCategoryButtons(category) {
   return (
-    <Category onClick={getButtonCategory} data-category={category} body={category}/>
+    <Category onClick={getButtonCategory} data-category={category} body={category} />
   )
 }
 
-function getButtonCategory(e){
-  console.log(e.currentTarget.getAttribute("data-category"))
+function getButtonCategory(e) {
+  let categoryName = e.currentTarget.getAttribute("data-category")
+  retrieveQuoteByCategory(categoryName)
 }
 
 
 function retrieveQuoteByCategory(categoryName) {
-  allQuotes = quotes.getQuotesByCategory(categoryName);
+  // allQuotes = quotes.getQuotesByCategory(categoryName);
+  console.log(quotes.getQuotesByCategory(categoryName))
 }
 
 function retrieveQuoteByAuthor(authorName) {
@@ -63,11 +66,11 @@ function retrieveTodayQuote() {
   return quotes.getTodaysQuote();
 }
 
-function nextQuote(){
+function nextQuote() {
   console.log("Next quote")
 }
 
-function previousQuote(){
+function previousQuote() {
   console.log("Previous Quote")
 }
 
