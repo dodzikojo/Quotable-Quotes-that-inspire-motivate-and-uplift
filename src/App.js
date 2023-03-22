@@ -17,33 +17,52 @@ import React, { Component } from 'react';
 
 const allQuotes = quotes.getAllQuotes();
 const allQuotesCategories = quotes.getAllCategories();
-console.log(allQuotesCategories);
+let todayQuote = retrieveTodayQuote();
+
+let displayedQuote = {
+  id: 0,
+  body: todayQuote.body,
+  author: todayQuote.by,
+}
+// console.log(allQuotesCategories);
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      body: retrieveTodayQuote().body,
-      author: retrieveTodayQuote().author
+      body: displayedQuote.body,
+      author: displayedQuote.author,
+      totalQuotes: "2"
       
     }
+  }
+
+  getQuotesCount(){
+    this.setState({
+      totalQuotes: allQuotes.length
+    })
   }
 
   previousQuote() {
     this.setState({
       body: 'Previous Sample Body',
-      author: "Previous Sample Author"
+      author: "Previous Sample Author",
+      totalQuotes: "3"
+      
     })
   }
 
    nextQuote() {
     this.setState({
       body: 'Next Sample Body',
-      author: "Next Sample Author"
+      author: "Next Sample Author",
+      totalQuotes: "4"
     })
   }
 
-
+  //  retrieveTodayQuote() {
+  //   return quotes.getTodaysQuote();
+  // }
  
 
 
@@ -66,7 +85,8 @@ class App extends Component {
 
             <div className="mt-5 flex justify-center">
               <button onClick={() => this.previousQuote()} ><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
-              <button onClick={() => this.nextQuote()} className='ml-2' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
+              <div className='px-2'>1 of {this.state.totalQuotes}</div>
+              <button onClick={() => this.nextQuote()} className='' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
             </div>
           </div>
         </div>
@@ -95,9 +115,9 @@ function retrieveQuoteByCategory(categoryName) {
   console.log(quotes.getQuotesByCategory(categoryName))
 }
 
-function retrieveQuoteByAuthor(authorName) {
-  allQuotes = quotes.getQuotesByAuthor(authorName);
-}
+// function retrieveQuoteByAuthor(authorName) {
+//   allQuotes = quotes.getQuotesByAuthor(authorName);
+// }
 
 function retrieveTodayQuote() {
   return quotes.getTodaysQuote();
