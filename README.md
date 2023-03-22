@@ -1,6 +1,12 @@
+# Quotable - Quotes that inspire motivate and uplift
+This is a simple quote application that uses React do display quotes based on selected categories. The application also features functionality to copy quotes to clipboard and share quote to twitter.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Deployed URL
+View the application [here](https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift/)
 
 ## Available Scripts
 
