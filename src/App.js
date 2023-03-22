@@ -10,12 +10,13 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import quote from './components/quote';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
   return (
     <div className="App">
-
       <div className="flex justify-center flex-col m-auto h-screen">
         <div className="bg-white w-1/2 mx-auto  p-8 md:p-12 my-10 rounded-lg shadow-2xl">
           <div>
@@ -30,20 +31,8 @@ function App() {
           </div>
 
           <div className="mt-5 flex justify-center">
-            {/* <button className="bg-indigo-600 rounded-sm w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-color">Client</button> */}
-            <button
-              type="button"
-              class="inline-block rounded-full border-2 border-neutral-800 px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:border-neutral-800 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-800 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 active:border-neutral-900 active:text-neutral-900 dark:border-neutral-900 dark:text-neutral-900 dark:hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 dark:hover:text-neutral-900 dark:focus:border-neutral-900 dark:focus:text-neutral-900 dark:active:border-neutral-900 dark:active:text-neutral-900"
-              data-te-ripple-init>
-              Previous
-            </button>
-          
-            <button
-              type="button"
-              class="ml-2 inline-block rounded-full border-2 border-neutral-800 px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:border-neutral-800 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-800 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 active:border-neutral-900 active:text-neutral-900 dark:border-neutral-900 dark:text-neutral-900 dark:hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 dark:hover:text-neutral-900 dark:focus:border-neutral-900 dark:focus:text-neutral-900 dark:active:border-neutral-900 dark:active:text-neutral-900"
-              data-te-ripple-init>
-              Next
-            </button>
+            <button><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
+            <button className='ml-2' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
           </div>
         </div>
       </div>
