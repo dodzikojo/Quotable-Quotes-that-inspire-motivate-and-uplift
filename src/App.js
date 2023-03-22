@@ -72,7 +72,7 @@ function App() {
             <img src={logo} className="App-logo mx-auto mb-2" alt="logo" />
           </div>
           {allQuotesCategories.map(createCategoryButtons)}
-          <hr />
+          <hr className='mt-4'/>
 
           <Quotecomp body={quoteState.body} author={quoteState.author} />
 
