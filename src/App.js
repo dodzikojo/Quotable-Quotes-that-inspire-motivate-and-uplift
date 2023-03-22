@@ -4,6 +4,7 @@ import nav from './components/navbar';
 import './App.css';
 import 'holderjs';
 import Quotecomp from './components/quote-comp';
+import Category from './components/category'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
@@ -24,10 +25,7 @@ function App() {
             <img src={logo} className="App-logo mx-auto" alt="logo" />
           </div>
 
-          <button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded-full">
-  Button
-</button>
-
+          <Category/>
           <Quotecomp />
 
           <div className="mt-5 flex justify-center">
@@ -42,15 +40,15 @@ function App() {
 }
 
 
-function retrieveQuoteByCategory(categoryName){
+function retrieveQuoteByCategory(categoryName) {
   allQuotes = quotes.getQuotesByCategory(categoryName);
 }
 
-function retrieveQuoteByAuthor(authorName){
+function retrieveQuoteByAuthor(authorName) {
   allQuotes = quotes.getQuotesByAuthor(authorName);
 }
 
-function retrieveTodayQuote(authorName){
+function retrieveTodayQuote(authorName) {
   return quotes.getTodaysQuote();
 }
 
