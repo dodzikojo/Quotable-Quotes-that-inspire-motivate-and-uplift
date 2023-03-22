@@ -3,15 +3,15 @@ import React from "react"
 const quotes = require("success-motivational-quotes");
 console.log(quotes.getAllQuotes());
 
-function Quotecomp() {
+function Quotecomp(props) {
     return (
         <div>
             <div className="mt-5 text-4xl">
-                Quotes body
+                {props.body}
             </div>
 
             <div className="mt-5 text-xl">
-                Albert Einstein
+                {props.author}
             </div>
         </div>
     )
