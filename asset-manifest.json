@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/css/main.b127fee3.css",
-    "main.js": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/js/main.ed3ce8a2.js",
+    "main.css": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/css/main.992645d3.css",
+    "main.js": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/js/main.5125b12f.js",
     "static/js/787.00b4b82c.chunk.js": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/js/787.00b4b82c.chunk.js",
     "static/media/logo.png": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/media/logo.40eb878697954079d3ed.png",
     "index.html": "/Quotable-Quotes-that-inspire-motivate-and-uplift/index.html",
-    "main.b127fee3.css.map": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/css/main.b127fee3.css.map",
-    "main.ed3ce8a2.js.map": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/js/main.ed3ce8a2.js.map",
+    "main.992645d3.css.map": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/css/main.992645d3.css.map",
+    "main.5125b12f.js.map": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/js/main.5125b12f.js.map",
     "787.00b4b82c.chunk.js.map": "/Quotable-Quotes-that-inspire-motivate-and-uplift/static/js/787.00b4b82c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b127fee3.css",
-    "static/js/main.ed3ce8a2.js"
+    "static/css/main.992645d3.css",
+    "static/js/main.5125b12f.js"
   ]
 }
