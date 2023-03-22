@@ -14,6 +14,11 @@ import quotes from 'success-motivational-quotes'
 
 import React, { Component } from 'react';
 
+
+const allQuotes = quotes.getAllQuotes();
+const allQuotesCategories = quotes.getAllCategories();
+console.log(allQuotesCategories);
+
 class App extends Component {
   constructor() {
     super()
@@ -24,13 +29,24 @@ class App extends Component {
     }
   }
 
-   nextQuote() {
-    console.log("Next quote")
+  previousQuote() {
     this.setState({
-      body: 'Sample Body',
-      author: "Sample Author"
+      body: 'Previous Sample Body',
+      author: "Previous Sample Author"
     })
   }
+
+   nextQuote() {
+    this.setState({
+      body: 'Next Sample Body',
+      author: "Next Sample Author"
+    })
+  }
+
+
+ 
+
+
 
 
   render() {
@@ -47,10 +63,9 @@ class App extends Component {
             <hr />
 
             <Quotecomp body={this.state.body} author={this.state.author} />
-            {/* <div>{this.state.body}</div> */}
 
             <div className="mt-5 flex justify-center">
-              <button onClick={previousQuote} ><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
+              <button onClick={() => this.previousQuote()} ><FontAwesomeIcon icon={faCircleArrowLeft} /></button>
               <button onClick={() => this.nextQuote()} className='ml-2' ><FontAwesomeIcon icon={faCircleArrowRight} /></button>
             </div>
           </div>
@@ -60,12 +75,6 @@ class App extends Component {
     );
   }
 }
-
-
-const allQuotes = quotes.getAllQuotes();
-const allQuotesCategories = quotes.getAllCategories();
-console.log(allQuotesCategories);
-
 
 
 
@@ -96,9 +105,9 @@ function retrieveTodayQuote() {
 
 
 
-function previousQuote() {
-  console.log("Previous Quote")
-}
+// function previousQuote() {
+//   console.log("Previous Quote")
+// }
 
 
 export default App;
