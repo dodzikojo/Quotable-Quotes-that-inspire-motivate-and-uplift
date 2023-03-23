@@ -91,6 +91,14 @@ function App() {
               <TelegramIcon size={27} round />
             </TelegramShareButton>
 
+            <WhatsappShareButton
+              url={"https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift/"}
+              title={quoteState.body + " -" + quoteState.author}
+              separator=":: "
+              className="float-right Demo__some-network__share-button ml-2">
+              <WhatsappIcon size={27} round />
+            </WhatsappShareButton>
+
             <button className="float-right text-xl ml-2" onClick={() => { navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author) }} ><FontAwesomeIcon icon={faClipboard} /></button>
 
           </div>
