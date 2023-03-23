@@ -19,6 +19,42 @@
   }
 }
 
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  #mainCard {
+    margin: 20px !important;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  #mainCard {
+    margin: 60px !important;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  #mainCard {
+    margin: 80px !important;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  #mainCard {
+    margin: 150px !important;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  #mainCard {
+    margin: 200px !important;
+  }
+}
+
+
 /* .App-header {
   background-color: #282c34;
   min-height: 100vh;
