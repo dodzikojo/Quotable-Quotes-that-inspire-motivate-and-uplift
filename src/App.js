@@ -6,7 +6,7 @@ import Category from './components/category'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard } from '@fortawesome/free-solid-svg-icons'
-import { TwitterShareButton, TwitterIcon } from 'react-share';
+import { TwitterShareButton, TelegramShareButton, WhatsappShareButton, LinkedinShareButton, EmailShareButton, RedditShareButton, RedditIcon, TwitterIcon, TelegramIcon, WhatsappIcon, EmailIcon, LinkedinIcon } from 'react-share';
 
 import quotes from 'success-motivational-quotes'
 
@@ -67,7 +67,7 @@ function App() {
   return (
     <div className="App">
       <div className="flex justify-center flex-col m-auto h-screen">
-        <div className="bg-white w-1/2 mx-auto  p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+        <div className="bg-white w-1/2 mx-auto  p-8 pt-4 md:p-12 my-10 rounded-lg shadow-2xl">
           <div>
             <img src={logo} className="App-logo mx-auto mb-2" alt="logo" />
           </div>
@@ -80,12 +80,18 @@ function App() {
             <TwitterShareButton
               url={"https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift/"}
               title={quoteState.body + " -" + quoteState.author}
-              className="float-right Demo__some-network__share-button ml-2"
-            >
+              className="float-right Demo__some-network__share-button ml-2">
               <TwitterIcon size={27} round />
             </TwitterShareButton>
 
-            <button className="float-right text-xl" onClick={() => { navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author) }} ><FontAwesomeIcon icon={faClipboard} /></button>
+            <TelegramShareButton
+              url={"https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift/"}
+              title={quoteState.body + " -" + quoteState.author}
+              className="float-right Demo__some-network__share-button  ml-2">
+              <TelegramIcon size={27} round />
+            </TelegramShareButton>
+
+            <button className="float-right text-xl ml-2" onClick={() => { navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author) }} ><FontAwesomeIcon icon={faClipboard} /></button>
 
           </div>
         </div>
