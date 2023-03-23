@@ -8,6 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard } from '@fortawesome/free-solid-svg-icons'
 import { TwitterShareButton, TelegramShareButton, WhatsappShareButton, LinkedinShareButton, EmailShareButton, RedditShareButton, RedditIcon, TwitterIcon, TelegramIcon, WhatsappIcon, EmailIcon, LinkedinIcon } from 'react-share';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import quotes from 'success-motivational-quotes'
 
 import React, { Component, useState } from 'react';
@@ -63,6 +66,21 @@ function App() {
     quoteState.allRetrievedQuotes = allQuotes
   }
 
+  function copyToClipboard(){
+    navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author)
+
+    toast.success('Copied to clipboard!', {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+
 
   return (
     <div className="App">
@@ -73,7 +91,7 @@ function App() {
           </div>
           {allQuotesCategories.map(createCategoryButtons)}
           <hr />
-
+          <ToastContainer />
           <Quotecomp body={quoteState.body} author={quoteState.author} />
 
           <div className="flow-root">
@@ -118,7 +136,7 @@ function App() {
               <EmailIcon size={27} round />
             </EmailShareButton>
 
-            <button className="float-right text-xl ml-2" onClick={() => { navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author) }} ><FontAwesomeIcon icon={faClipboard} /></button>
+            <button className="float-right text-xl ml-2" onClick={() => copyToClipboard()} ><FontAwesomeIcon icon={faClipboard} /></button>
 
           </div>
         </div>
