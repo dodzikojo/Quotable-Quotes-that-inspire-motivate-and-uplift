@@ -99,6 +99,16 @@ function App() {
               <WhatsappIcon size={27} round />
             </WhatsappShareButton>
 
+            <RedditShareButton
+              url={"https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift/"}
+              title={quoteState.body + " -" + quoteState.author}
+              windowWidth={660}
+              windowHeight={460}
+              className="Demo__some-network__share-button float-right ml-2"
+            >
+              <RedditIcon size={27} round />
+            </RedditShareButton>
+
             <button className="float-right text-xl ml-2" onClick={() => { navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author) }} ><FontAwesomeIcon icon={faClipboard} /></button>
 
           </div>
