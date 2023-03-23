@@ -67,7 +67,7 @@ function App() {
   return (
     <div className="App">
       <div className="flex justify-center flex-col m-auto h-screen">
-        <div className="bg-white w-1/2 mx-auto  p-8 pt-4 md:p-12 my-10 rounded-lg shadow-2xl">
+        <div className="bg-white w-1/2 mx-auto  p-8 pt-4 pb-4 md:p-12 my-10 rounded-lg shadow-2xl">
           <div>
             <img src={logo} className="App-logo mx-auto mb-2" alt="logo" />
           </div>
