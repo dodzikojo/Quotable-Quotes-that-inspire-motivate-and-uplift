@@ -89,10 +89,12 @@ function App() {
           <div>
             <img src={logo} className="App-logo mx-auto mb-2" alt="logo" />
           </div>
-          {allQuotesCategories.map(createCategoryButtons)}
-          <hr />
+         
           <ToastContainer />
           <Quotecomp body={quoteState.body} author={quoteState.author} />
+          <hr />
+          {allQuotesCategories.map(createCategoryButtons)}
+        
 
           <div className="flow-root">
             <TwitterShareButton
