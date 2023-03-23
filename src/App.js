@@ -92,7 +92,7 @@ function App() {
          
           <ToastContainer />
           <Quotecomp body={quoteState.body} author={quoteState.author} />
-          <hr />
+          <hr className="mt-3 mb-3" />
           {allQuotesCategories.map(createCategoryButtons)}
         
 
