@@ -81,11 +81,11 @@ function App() {
       });
   }
 
-
+  // sm:w-4/5 md:w-4/5 lg:w-3/4  xl:w-3/4  mx-auto
   return (
     <div className="App">
-      <div className="flex justify-center flex-col m-auto h-screen">
-        <div className="bg-white w-1/2 mx-auto  p-8 pt-4 pb-4 md:p-12 my-10 rounded-lg shadow-2xl">
+      <div className="flex justify-center md:flex-col md:m-auto md:h-screen">
+        <div className="bg-white   p-8 pt-4 pb-4 md:p-12 my-10 rounded-lg shadow-2xl" id='mainCard'>
           <div>
             <img src={logo} className="App-logo mx-auto mb-2" alt="logo" />
           </div>
