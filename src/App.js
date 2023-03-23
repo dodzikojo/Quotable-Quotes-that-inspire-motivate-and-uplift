@@ -109,6 +109,15 @@ function App() {
               <RedditIcon size={27} round />
             </RedditShareButton>
 
+            <EmailShareButton
+              url={"https://dodzikojo.github.io/Quotable-Quotes-that-inspire-motivate-and-uplift/"}
+              subject={"Quote by " + quoteState.author + " from Quotable"}
+              body={quoteState.body + " -" + quoteState.author}
+              className="Demo__some-network__share-button float-right ml-2"
+            >
+              <EmailIcon size={27} round />
+            </EmailShareButton>
+
             <button className="float-right text-xl ml-2" onClick={() => { navigator.clipboard.writeText(quoteState.body + " -" + quoteState.author) }} ><FontAwesomeIcon icon={faClipboard} /></button>
 
           </div>
