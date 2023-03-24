@@ -1,5 +1,8 @@
 # Quotable - Quotes that inspire motivate and uplift
-This is a simple quote application that uses React do display quotes based on selected categories. The application also features functionality to copy quotes to clipboard and share quote to twitter.
+This is a simple quote application that uses React do display quotes based on selected categories. The application also features functionality to copy quotes to clipboard and share quote to various social media and messaging platforms.
+
+## Preview
+<img src="preview/preview.png" alt="Preview of Quotable" width="900"/>
 
 
 ## Live URL
