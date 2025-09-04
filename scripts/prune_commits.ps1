@@ -175,7 +175,7 @@ def commit_callback(commit):
 $env:PRUNE_REMOVE_SET = $removeJson
 $env:PRUNE_HEAD_SHA = $headLower
 $callbackExpr = "exec(open(r'$tempPy','rb').read(),globals())"
-$args = @('--force','--commit-callback',$callbackExpr)
+$args = @($callbackExpr)
 Write-Host 'Invoking git-filter-repo...' -ForegroundColor Yellow
 $out = & Run-FilterRepo --Args $args 2>&1; $code=$LASTEXITCODE
 if ($code -ne 0) {
