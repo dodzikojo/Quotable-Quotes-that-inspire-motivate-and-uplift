@@ -65,13 +65,13 @@ function Get-CommitsOnHead {
     if (-not $line) { continue }
     $parts = $line -split "`t", 3
     if ($parts.Count -lt 3) { continue }
-    $sha = $parts
-    $ad = $parts[11] # "1689003540 -0700"
-    $subj = $parts[21]
+    $sha = $parts[0]
+    $ad = $parts[1] # "1689003540 -0700"
+    $subj = $parts[2]
     $adParts = $ad -split ' '
     if ($adParts.Count -ne 2) { continue }
-    $epoch = [long]$adParts
-    $tz = $adParts[11]
+    $epoch = [long]$adParts[0]
+    $tz = $adParts[1]
     $local = Convert-AuthorRawToLocal -Epoch $epoch -Tz $tz
     [pscustomobject]@{
       ShaFull = $sha
