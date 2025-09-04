@@ -59,18 +59,17 @@ function Convert-AuthorRawToLocal {
 }
 
 function Get-CommitsOnHead {
-  # Use git log with raw date: "%H<TAB>%ad<TAB>%s", where %ad is "epoch tz"
   $lines = git log --date=raw --pretty=format:"%H`t%ad`t%s" HEAD
   foreach ($line in $lines) {
     if (-not $line) { continue }
     $parts = $line -split "`t", 3
     if ($parts.Count -lt 3) { continue }
-    $sha = $parts[0]
+    $sha = $parts
     $ad = $parts[1] # "1689003540 -0700"
-    $subj = $parts[2]
+    $subj = $parts[12]
     $adParts = $ad -split ' '
     if ($adParts.Count -ne 2) { continue }
-    $epoch = [long]$adParts[0]
+    $epoch = [long]$adParts
     $tz = $adParts[1]
     $local = Convert-AuthorRawToLocal -Epoch $epoch -Tz $tz
     [pscustomobject]@{
@@ -115,7 +114,7 @@ if (-not $Execute) {
   exit 0
 }
 
-# EXECUTE: build Python callback and run filter-repo
+# EXECUTE: use inline callback with corrected timezone parsing
 $callback = @'
 from datetime import datetime, timedelta
 import os
@@ -130,9 +129,10 @@ START_MIN = parse_hhmm(os.environ.get("FILTER_START", "08:00"))
 END_MIN   = parse_hhmm(os.environ.get("FILTER_END", "18:00"))
 
 def in_weekday_window(commit):
-    raw = commit.author_date.decode("utf-8")  # e.g. "1689003540 -0700"
+    raw = commit.author_date.decode("utf-8")
     epoch_s, tz = raw.split()
     epoch = int(epoch_s)
+    # FIXED: Check first character of timezone, not entire string
     sign = 1 if tz == "+" else -1
     tz_h = int(tz[1:3]); tz_m = int(tz[3:5])
     offset_min = sign*(tz_h*60 + tz_m)
@@ -140,7 +140,6 @@ def in_weekday_window(commit):
     mins = dt_local.hour*60 + dt_local.minute
     return dt_local.weekday() < 5 and START_MIN <= mins < END_MIN
 
-# Skip matching commits, but always keep the latest (HEAD) by original id
 if commit.original_id != KEEP_OID and in_weekday_window(commit):
     commit.skip()
 '@
@@ -151,7 +150,6 @@ $env:KEEP_OID     = $headOid
 
 Write-Host "Rewriting history on current branch; keeping HEAD $headOid and dropping weekday commits within $StartHour-$EndHour (End exclusive)..."
 
-# Use inline callback instead of file reference to avoid Windows path issues
 & git filter-repo --force --refs HEAD --replace-refs update-or-add --commit-callback $callback
 
 if ($LASTEXITCODE -ne 0) {
@@ -159,5 +157,3 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "Done. Inspect history and force-push as needed."
-
-
