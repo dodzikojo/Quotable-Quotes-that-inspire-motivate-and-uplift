@@ -140,7 +140,7 @@ def in_weekday_window(commit):
     mins = dt_local.hour*60 + dt_local.minute
     return dt_local.weekday() < 5 and START_MIN <= mins < END_MIN
 
-# Skip matching commits, but always keep latest (HEAD) by original id
+# Skip matching commits, but always keep the latest (HEAD) by original id
 if commit.original_id != KEEP_OID and in_weekday_window(commit):
     commit.skip()
 '@
@@ -153,10 +153,16 @@ $cbFile  = Join-Path $tempDir "callback.py"
 $env:FILTER_START = $StartHour
 $env:FILTER_END   = $EndHour
 $env:KEEP_OID     = $headOid
-$env:CB_PATH      = $cbFile
 
 Write-Host "Rewriting history on current branch; keeping HEAD $headOid and dropping weekday commits within $StartHour-$EndHour (End exclusive)..."
-& git filter-repo --force --refs HEAD --replace-refs update-or-add --commit-callback 'import os; exec(open(os.environ["CB_PATH"], "r", encoding="utf-8").read())'
+
+# Use the supported @file form to avoid quoting/env pitfalls on Windows
+& git filter-repo --force --refs HEAD --replace-refs update-or-add --commit-callback=@$cbFile
+
+if ($LASTEXITCODE -ne 0) {
+  throw "git filter-repo failed (exit $LASTEXITCODE). Check .git/fast_import_crash_* for details."
+}
 
 Remove-Item -Recurse -Force $tempDir
 Write-Host "Done. Inspect history and force-push as needed."
+
