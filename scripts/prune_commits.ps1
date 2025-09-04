@@ -39,7 +39,8 @@ param(
     [switch]$KeepTemp,
     [switch]$AllowDirty,
     [switch]$CherryPickMode,
-    [int]$MergeMainline = 1
+    [int]$MergeMainline = 1,
+    [switch]$AllowPythonModule   # Explicitly allow fallback to "python -m git_filter_repo" (may lack --commit-callback)
 )
 
 function Parse-Time($s) {
@@ -146,13 +147,18 @@ if ($CherryPickMode) {
     exit $status
 }
 
-# git-filter-repo path detection
+# git-filter-repo path detection (prefer standalone script). We only attempt python module if -AllowPythonModule supplied.
 $global:FILTER_REPO_MODE = 'git'
 git filter-repo --version *> $null
 if ($LASTEXITCODE -ne 0) {
-    python -m git_filter_repo --version *> $null
-    if ($LASTEXITCODE -eq 0) { $global:FILTER_REPO_MODE = 'python' } else {
-        Write-Error 'git-filter-repo not available; re-run with -CherryPickMode or install git-filter-repo.'; exit 1 }
+    if ($AllowPythonModule) {
+        python -m git_filter_repo --version *> $null
+        if ($LASTEXITCODE -eq 0) { $global:FILTER_REPO_MODE = 'python' }
+        else { Write-Error 'git-filter-repo not available (nor python module). Install it or use -CherryPickMode.'; exit 1 }
+        Write-Host 'WARNING: Using python module form; some options (commit-callback) may not be supported in older versions.' -ForegroundColor Yellow
+    } else {
+        Write-Error 'git filter-repo command not found. Install standalone script (recommended) OR rerun with -CherryPickMode OR add -AllowPythonModule to try module.'; exit 1
+    }
 }
 
 function Run-FilterRepo { param([string[]]$Args) if ($FILTER_REPO_MODE -eq 'python') { & python -m git_filter_repo @Args } else { git filter-repo @Args } }
@@ -175,7 +181,7 @@ def commit_callback(commit):
 $env:PRUNE_REMOVE_SET = $removeJson
 $env:PRUNE_HEAD_SHA = $headLower
 $callbackExpr = "exec(open(r'$tempPy','rb').read(),globals())"
-$args = @($callbackExpr)
+$args = @('--force','--commit-callback',$callbackExpr)
 Write-Host 'Invoking git-filter-repo...' -ForegroundColor Yellow
 $out = & Run-FilterRepo --Args $args 2>&1; $code=$LASTEXITCODE
 if ($code -ne 0) {
