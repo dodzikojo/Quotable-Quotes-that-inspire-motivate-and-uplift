@@ -41,7 +41,10 @@ param(
     [switch]$Execute,
     [string]$StartHour = '08:00',
     [string]$EndHour   = '18:00',
-    [switch]$IncludeSeconds
+    [switch]$IncludeSeconds,
+    [switch]$KeepTemp,          # Keep the generated Python callback file for debugging
+    [switch]$AllowDirty,        # Skip clean worktree check
+    [switch]$CherryPickMode     # Use manual cherry-pick linear rewrite instead of git-filter-repo
 )
 
 function Parse-Time($s) {
@@ -61,6 +64,15 @@ if ($start -ge $end) { Write-Error 'StartHour must be earlier than EndHour.'; ex
 # Ensure we are inside a git repo
 git rev-parse --is-inside-work-tree 2>$null 1>$null
 if ($LASTEXITCODE -ne 0) { Write-Error 'Not inside a git repository.'; exit 1 }
+
+if (-not $AllowDirty) {
+    $status = git status --porcelain
+    if ($status) {
+        Write-Host 'Working tree not clean. Stash or commit changes, or use -AllowDirty to proceed.' -ForegroundColor Yellow
+        Write-Host 'Aborting (use -AllowDirty to override).' -ForegroundColor Yellow
+        exit 1
+    }
+}
 
 $headSha = (git rev-parse HEAD).Trim()
 $branch  = (git rev-parse --abbrev-ref HEAD).Trim()
@@ -123,6 +135,42 @@ Write-Host "Rewriting history..." -ForegroundColor Yellow
 $backupBranch = "backup/pre-prune-$(Get-Date -Format yyyyMMddHHmmss)"
 git branch $backupBranch
 Write-Host "Created backup branch: $backupBranch" -ForegroundColor Yellow
+
+function Do-CherryPickRewrite {
+    param([string[]]$KeepList)
+    Write-Host 'Using CherryPickMode (no git-filter-repo).' -ForegroundColor Yellow
+    # Detect merges (more than one parent) which we can't safely re-create linearly
+    $mergeCommits = @()
+    foreach ($k in $KeepList) {
+        $parents = (git rev-list --parents -n1 $k).Split(' ') | Select-Object -Skip 1
+        if ($parents.Count -gt 1) { $mergeCommits += $k }
+    }
+    if ($mergeCommits.Count -gt 0) {
+        Write-Host 'WARNING: Merge commits detected; cherry-pick will linearize history and may not replicate merges exactly.' -ForegroundColor Yellow
+        Write-Host ($mergeCommits | ForEach-Object { $_.Substring(0,10) }) -Separator ' '
+    }
+    $newBranch = "rewrite/pruned-$(Get-Date -Format yyyyMMddHHmmss)"
+    $first = $KeepList[0]
+    git checkout -q -b $newBranch $first
+    if ($LASTEXITCODE -ne 0) { Write-Error 'Failed to create rewrite branch.'; return 1 }
+    for ($i=1; $i -lt $KeepList.Count; $i++) {
+        $c = $KeepList[$i]
+        git cherry-pick -x $c
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "Conflict during cherry-pick of $c. Resolve, then run: git cherry-pick --continue OR abort with git cherry-pick --abort" -ForegroundColor Red
+            return 2
+        }
+    }
+    Write-Host "Cherry-pick rewrite complete. Review with: git log --oneline --graph" -ForegroundColor Green
+    Write-Host "To replace original branch: git checkout $branch; git reset --hard $newBranch; git push --force-with-lease origin $branch" -ForegroundColor Cyan
+    return 0
+}
+
+if ($CherryPickMode) {
+    $keepListOrdered = $toKeep  # already in chronological order
+    $status = Do-CherryPickRewrite -KeepList $keepListOrdered
+    exit $status
+}
 
 <#
 Detect git-filter-repo availability. We first try the git subcommand form (preferred):
@@ -187,13 +235,30 @@ def commit_callback(commit):
 $env:PRUNE_REMOVE_SET = $removeJson
 $env:PRUNE_HEAD_SHA    = $headLower
 
-Run-FilterRepo --Args @('--force','--commit-callback', ("exec(compile(open(r'{0}', 'rb').read(), r'{0}', 'exec'))" -f $tempPy))
+# Simpler exec form (avoid compile wrapper to reduce quoting issues)
+$callbackExpr = "exec(open(r'$tempPy','rb').read(),globals())"
+$args = @('--force','--commit-callback', $callbackExpr)
 
-if ($LASTEXITCODE -ne 0) {
-    Write-Error 'git-filter-repo failed; checkout the backup branch to restore.'; exit 1
+Write-Host 'Invoking git-filter-repo...' -ForegroundColor Yellow
+$filterOutput = & Run-FilterRepo --Args $args 2>&1
+$exit = $LASTEXITCODE
+if ($exit -ne 0) {
+    Write-Error "git-filter-repo failed (exit $exit). Truncated output:";
+    $filterOutput | Select-Object -First 40 | ForEach-Object { Write-Host $_ -ForegroundColor DarkRed }
+    Write-Host ''
+    Write-Host 'Troubleshooting tips:' -ForegroundColor Cyan
+    Write-Host '  1. Ensure no hooks or filters aborting.'
+    Write-Host '  2. Try: git fsck --no-reflogs --full --strict' -ForegroundColor DarkCyan
+    Write-Host '  3. Run again with -KeepTemp and inspect the Python file.' -ForegroundColor DarkCyan
+    Write-Host '  4. Upgrade: python -m pip install --upgrade git-filter-repo' -ForegroundColor DarkCyan
+    Write-Host "  5. Restore backup: git reset --hard $backupBranch" -ForegroundColor DarkCyan
+    Write-Host '  6. If sparse checkout or alternates in use, disable temporarily.' -ForegroundColor DarkCyan
+    if (-not $KeepTemp) { Write-Host "Temp file kept automatically for debugging: $tempPy" -ForegroundColor Yellow }
+    else { Write-Host "Temp file location: $tempPy" -ForegroundColor Yellow }
+    exit 1
 }
 
-Remove-Item $tempPy -ErrorAction SilentlyContinue
+if (-not $KeepTemp) { Remove-Item $tempPy -ErrorAction SilentlyContinue }
 
 Write-Host 'History rewritten successfully.' -ForegroundColor Green
 Write-Host "Next step (review first): git log --oneline" -ForegroundColor Cyan
