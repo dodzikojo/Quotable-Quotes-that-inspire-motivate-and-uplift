@@ -145,24 +145,19 @@ if commit.original_id != KEEP_OID and in_weekday_window(commit):
     commit.skip()
 '@
 
-$tempDir = Join-Path ([IO.Path]::GetTempPath()) ("git-prune-window-" + [guid]::NewGuid().ToString("n"))
-$null = New-Item -ItemType Directory -Path $tempDir -Force
-$cbFile  = Join-Path $tempDir "callback.py"
-[IO.File]::WriteAllText($cbFile, $callback, [Text.Encoding]::UTF8)
-
 $env:FILTER_START = $StartHour
 $env:FILTER_END   = $EndHour
 $env:KEEP_OID     = $headOid
 
 Write-Host "Rewriting history on current branch; keeping HEAD $headOid and dropping weekday commits within $StartHour-$EndHour (End exclusive)..."
 
-# Use the supported @file form to avoid quoting/env pitfalls on Windows
-& git filter-repo --force --refs HEAD --replace-refs update-or-add --commit-callback=@$cbFile
+# Use inline callback instead of file reference to avoid Windows path issues
+& git filter-repo --force --refs HEAD --replace-refs update-or-add --commit-callback $callback
 
 if ($LASTEXITCODE -ne 0) {
   throw "git filter-repo failed (exit $LASTEXITCODE). Check .git/fast_import_crash_* for details."
 }
 
-Remove-Item -Recurse -Force $tempDir
 Write-Host "Done. Inspect history and force-push as needed."
+
 
